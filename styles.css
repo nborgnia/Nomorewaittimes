@@ -1,0 +1,9 @@
+/* Simple, mobile-first utility styles */
+:root { font-family: system-ui, sans-serif; line-height: 1.5; }
+body  { margin: 0; padding: 2rem; max-width: 72ch; }
+h1,h2 { line-height: 1.2; }
+header,footer { text-align: center; }
+@media (prefers-color-scheme: dark) {
+  body { background: #111; color: #eee; }
+  a    { color: #8ab4f8; }
+}
