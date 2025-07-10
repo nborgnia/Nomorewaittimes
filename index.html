@@ -1,49 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Trip Planner</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>No More Wait Times - Plan Your Visit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+
+    .breadcrumbs {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 5px;
+    }
+
+    .breadcrumbs span {
+      margin-right: 5px;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    form {
+      display: grid;
+      gap: 15px;
+      max-width: 600px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      padding: 8px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Hero Section -->
-    <section id="hero">
-        <img src="images/hero.jpg" alt="Theme Park" width="100%">
-    </section>
+  <nav class="breadcrumbs">
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips">My Trips</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/contact_us">Contact Us</a>
+  </nav>
 
-    <!-- Plan Your Trip Section -->
-    <section id="plan-trip">
-        <h2>Plan Your Trip</h2>
-        <form id="trip-form">
-            <label for="trip-name">Trip Name:</label>
-            <input type="text" id="trip-name" name="trip-name"><br><br>
+  <div class="content">
+    <h1>Plan Your Theme Park Visit</h1>
+    <form action="/submit_trip" method="post">
+      <div>
+        <label for="park">Choose Theme Park:</label>
+        <select id="park" name="park" required>
+          <option value="">--Select--</option>
+          <option value="disneyland">Disneyland</option>
+          <option value="universal">Universal Studios</option>
+          <option value="sixflags">Six Flags</option>
+          <option value="seaworld">SeaWorld</option>
+        </select>
+      </div>
 
-            <label for="trip-date">Trip Date:</label>
-            <input type="date" id="trip-date" name="trip-date"><br><br>
+      <div>
+        <label for="date">Arrival Date:</label>
+        <input type="date" id="date" name="arrival_date" required />
+      </div>
 
-            <label for="trip-duration">Trip Duration:</label>
-            <input type="number" id="trip-duration" name="trip-duration" placeholder="Number of days"><br><br>
+      <div>
+        <label for="time">Arrival Time:</label>
+        <input type="time" id="time" name="arrival_time" required />
+      </div>
 
-            <button type="button" onclick="saveTrip()">Save</button>
-            <button type="submit">Submit</button>
-            <button type="reset">Reset</button>
-        </form>
-    </section>
+      <div>
+        <label for="party_size">Number of People in Party:</label>
+        <input type="number" id="party_size" name="party_size" min="1" required />
+      </div>
 
-    <!-- Map Section -->
-    <section id="map">
-        <h2>Explore the Theme Park</h2>
-        <div id="google-map" style="height: 500px;"></div>
-    </section>
+      <div>
+        <label for="closed_rides">Closed Rides (if any):</label>
+        <textarea id="closed_rides" name="closed_rides" placeholder="e.g. Splash Mountain, X2"></textarea>
+      </div>
 
-    <!-- Footer Section -->
-    <footer id="footer">
-        <p>&copy; 2025 Trip Planner</p>
-    </footer>
+      <div>
+        <label for="avoid_rides">Rides You Don’t Want to Go On:</label>
+        <textarea id="avoid_rides" name="avoid_rides" placeholder="e.g. Tower of Terror, Mako"></textarea>
+      </div>
 
-    <script src="js/script.js"></script>
+      <button type="submit">Submit Plan</button>
+    </form>
+  </div>
+
 </body>
 </html>
