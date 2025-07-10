@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>No More Wait Times - Plan Your Visit</title>
   <style>
@@ -19,10 +19,6 @@
     .breadcrumbs a {
       text-decoration: none;
       color: #007bff;
-      margin-right: 5px;
-    }
-
-    .breadcrumbs span {
       margin-right: 5px;
     }
 
@@ -44,7 +40,7 @@
     form {
       display: grid;
       gap: 15px;
-      max-width: 600px;
+      max-width: 700px;
     }
 
     label {
@@ -70,6 +66,11 @@
     button:hover {
       background-color: #218838;
     }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -82,26 +83,33 @@
 
   <div class="content">
     <h1>Plan Your Theme Park Visit</h1>
-    <form action="/submit_trip" method="post">
+    <form id="tripForm" onsubmit="return validateForm()">
       <div>
         <label for="park">Choose Theme Park:</label>
         <select id="park" name="park" required>
           <option value="">--Select--</option>
-          <option value="disneyland">Disneyland</option>
-          <option value="universal">Universal Studios</option>
-          <option value="sixflags">Six Flags</option>
-          <option value="seaworld">SeaWorld</option>
+          <option value="disneyland">Disneyland (CA)</option>
+          <option value="disneyworld">Walt Disney World (FL)</option>
+          <option value="universalhollywood">Universal Studios Hollywood (CA)</option>
+          <option value="universalorlando">Universal Orlando (FL)</option>
+          <option value="sixflags">Six Flags Magic Mountain (CA)</option>
+          <option value="seaworld">SeaWorld Orlando (FL)</option>
         </select>
       </div>
 
       <div>
         <label for="date">Arrival Date:</label>
-        <input type="date" id="date" name="arrival_date" required />
+        <input type="date" id="arrival_date" name="arrival_date" required />
       </div>
 
       <div>
-        <label for="time">Arrival Time:</label>
-        <input type="time" id="time" name="arrival_time" required />
+        <label for="arrival_time">Arrival Time:</label>
+        <input type="time" id="arrival_time" name="arrival_time" required />
+      </div>
+
+      <div>
+        <label for="departure_time">Departure Time:</label>
+        <input type="time" id="departure_time" name="departure_time" required />
       </div>
 
       <div>
@@ -111,17 +119,72 @@
 
       <div>
         <label for="closed_rides">Closed Rides (if any):</label>
-        <textarea id="closed_rides" name="closed_rides" placeholder="e.g. Splash Mountain, X2"></textarea>
+        <textarea id="closed_rides" name="closed_rides" placeholder="e.g. Splash Mountain or 'None'">None</textarea>
       </div>
 
       <div>
         <label for="avoid_rides">Rides You Don’t Want to Go On:</label>
-        <textarea id="avoid_rides" name="avoid_rides" placeholder="e.g. Tower of Terror, Mako"></textarea>
+        <textarea id="avoid_rides" name="avoid_rides" placeholder="e.g. Tower of Terror or 'None'">None</textarea>
       </div>
+
+      <div class="error" id="errorMsg"></div>
 
       <button type="submit">Submit Plan</button>
     </form>
   </div>
 
+  <script>
+    const parkHours = {
+      disneyland: { open: "08:00", close: "22:00" },
+      disneyworld: { open: "09:00", close: "23:00" },
+      universalhollywood: { open: "09:00", close: "21:00" },
+      universalorlando: { open: "08:00", close: "22:00" },
+      sixflags: { open: "10:30", close: "20:00" },
+      seaworld: { open: "09:00", close: "21:00" }
+    };
+
+    function validateForm() {
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.textContent = '';
+
+      const park = document.getElementById('park').value;
+      const date = new Date(document.getElementById('arrival_date').value);
+      const now = new Date();
+      now.setHours(0, 0, 0, 0); // Only compare date, not time
+
+      if (date < now) {
+        errorMsg.textContent = "Arrival date cannot be before today.";
+        return false;
+      }
+
+      const arrivalTime = document.getElementById('arrival_time').value;
+      const departureTime = document.getElementById('departure_time').value;
+
+      if (!parkHours[park]) {
+        errorMsg.textContent = "Please select a valid park.";
+        return false;
+      }
+
+      const openTime = parkHours[park].open;
+      const closeTime = parkHours[park].close;
+
+      if (arrivalTime < openTime || arrivalTime > closeTime) {
+        errorMsg.textContent = `Arrival time must be between ${openTime} and ${closeTime} for the selected park.`;
+        return false;
+      }
+
+      if (departureTime < openTime || departureTime > closeTime) {
+        errorMsg.textContent = `Departure time must be between ${openTime} and ${closeTime} for the selected park.`;
+        return false;
+      }
+
+      if (departureTime <= arrivalTime) {
+        errorMsg.textContent = "Departure time must be after arrival time.";
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </body>
 </html>
