@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Add a Trip</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+
+    .breadcrumbs {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 5px;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    form {
+      display: grid;
+      gap: 15px;
+      max-width: 600px;
+    }
+
+    input, select, textarea {
+      padding: 8px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .back-button {
+      background-color: #007bff;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="breadcrumbs">
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/">Home</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/contact_us">Contact Us</a>
+  </nav>
+
+  <div class="content">
+    <h1>Add a Trip</h1>
+    <form id="tripForm" onsubmit="return saveTrip()">
+      <label for="park">Theme Park:</label>
+      <select id="park" required>
+        <option value="">--Select--</option>
+        <option value="Disneyland">Disneyland</option>
+        <option value="Walt Disney World">Walt Disney World</option>
+        <option value="Universal Studios Hollywood">Universal Studios Hollywood</option>
+        <option value="Universal Orlando">Universal Orlando</option>
+        <option value="Six Flags Magic Mountain">Six Flags Magic Mountain</option>
+        <option value="SeaWorld Orlando">SeaWorld Orlando</option>
+      </select>
+
+      <label>Arrival Date:</label>
+      <input type="date" id="arrival_date" required>
+
+      <label>Arrival Time:</label>
+      <input type="time" id="arrival_time" required>
+
+      <label>Departure Time:</label>
+      <input type="time" id="departure_time" required>
+
+      <label>Party Size:</label>
+      <input type="number" id="party_size" min="1" required>
+
+      <label>Closed Rides:</label>
+      <textarea id="closed_rides">None</textarea>
+
+      <label>Rides to Avoid:</label>
+      <textarea id="avoid_rides">None</textarea>
+
+      <div class="error" id="errorMsg"></div>
+      <button type="submit">Save Trip</button>
+    </form>
+
+    <br/>
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips/">
+      <button class="back-button">← Back to My Trips</button>
+    </a>
+  </div>
+
+  <script>
+    function saveTrip() {
+      const park = document.getElementById('park').value;
+      const arrivalDate = document.getElementById('arrival_date').value;
+      const arrivalTime = document.getElementById('arrival_time').value;
+      const departureTime = document.getElementById('departure_time').value;
+      const partySize = document.getElementById('party_size').value;
+      const closedRides = document.getElementById('closed_rides').value;
+      const avoidRides = document.getElementById('avoid_rides').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      errorMsg.textContent = '';
+
+      const today = new Date();
+      const chosenDate = new Date(arrivalDate);
+      today.setHours(0, 0, 0, 0);
+      if (chosenDate < today) {
+        errorMsg.textContent = "Arrival date cannot be in the past.";
+        return false;
+      }
+
+      if (departureTime <= arrivalTime) {
+        errorMsg.textContent = "Departure must be after arrival.";
+        return false;
+      }
+
+      const newTrip = {
+        park,
+        arrivalDate,
+        arrivalTime,
+        departureTime,
+        partySize,
+        closedRides,
+        avoidRides
+      };
+
+      const trips = JSON.parse(localStorage.getItem("themeParkTrips") || "[]");
+      trips.push(newTrip);
+      localStorage.setItem("themeParkTrips", JSON.stringify(trips));
+      window.location.href = "https://nikhilkar199.github.io/Nomorewaittimes/my_trips/";
+      return false;
+    }
+  </script>
+</body>
+</html>
