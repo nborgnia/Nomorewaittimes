@@ -1,68 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Trips</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+  <meta charset="UTF-8"/>
+  <title>My Trips - No More Wait Times</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+
+    .breadcrumbs {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 5px;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 10px 15px;
+      margin-bottom: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Trips Section -->
-    <section id="trips">
-        <div class="row">
-            <!-- Column 1: Trip Table -->
-            <div class="column">
-                <table id="trips-table">
-                    <thead>
-                        <tr>
-                            <th>Trip #</th>
-                            <th>Trip Name</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dynamic rows will go here -->
-                    </tbody>
-                </table>
-                <button onclick="addTrip()">Add Trip</button>
-            </div>
+  <nav class="breadcrumbs">
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/">Home</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/contact_us">Contact Us</a>
+  </nav>
 
-            <!-- Column 2: Trip Map -->
-            <div class="column">
-                <h3>Trip Details</h3>
-                <div id="trip-map" style="height: 400px;"></div>
-                <button onclick="refreshMap()">Refresh</button>
-                <button onclick="updateTrip()">Update</button>
-            </div>
-        </div>
+  <div class="content">
+    <h1>My Trips</h1>
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips/add-a-trip/">
+      <button>Add a Trip</button>
+    </a>
 
-        <!-- Plan Your Trip Section -->
-        <section id="plan-trip">
-            <h2>Plan Your Trip</h2>
-            <form id="trip-form">
-                <label for="trip-name">Trip Name:</label>
-                <input type="text" id="trip-name" name="trip-name"><br><br>
+    <table id="tripsTable">
+      <thead>
+        <tr>
+          <th>Theme Park</th>
+          <th>Arrival</th>
+          <th>Departure</th>
+          <th>Party Size</th>
+          <th>Closed Rides</th>
+          <th>Rides to Avoid</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Trip rows will be inserted here dynamically -->
+      </tbody>
+    </table>
+  </div>
 
-                <label for="trip-date">Trip Date:</label>
-                <input type="date" id="trip-date" name="trip-date"><br><br>
+  <script>
+    const trips = JSON.parse(localStorage.getItem("themeParkTrips") || "[]");
 
-                <label for="trip-duration">Trip Duration:</label>
-                <input type="number" id="trip-duration" name="trip-duration" placeholder="Number of days"><br><br>
+    const tableBody = document.querySelector("#tripsTable tbody");
 
-                <button type="button" onclick="saveTrip()">Save</button>
-                <button type="submit">Submit</button>
-                <button type="reset">Reset</button>
-            </form>
-        </section>
-    </section>
+    function renderTrips() {
+      tableBody.innerHTML = "";
+      trips.forEach((trip, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${trip.park}</td>
+          <td>${trip.arrivalDate} ${trip.arrivalTime}</td>
+          <td>${trip.departureTime}</td>
+          <td>${trip.partySize}</td>
+          <td>${trip.closedRides}</td>
+          <td>${trip.avoidRides}</td>
+          <td><button class="delete-btn" onclick="deleteTrip(${index})">Delete</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
 
-    <!-- Footer Section -->
-    <footer id="footer">
-        <p>&copy; 2025 Trip Planner</p>
-    </footer>
+    function deleteTrip(index) {
+      trips.splice(index, 1);
+      localStorage.setItem("themeParkTrips", JSON.stringify(trips));
+      renderTrips();
+    }
 
-    <script src="js/script.js"></script>
+    renderTrips();
+  </script>
+
 </body>
 </html>
