@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Trips</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+</head>
+<body>
+
+    <!-- Trips Section -->
+    <section id="trips">
+        <div class="row">
+            <!-- Column 1: Trip Table -->
+            <div class="column">
+                <table id="trips-table">
+                    <thead>
+                        <tr>
+                            <th>Trip #</th>
+                            <th>Trip Name</th>
+                            <th>Date Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic rows will go here -->
+                    </tbody>
+                </table>
+                <button onclick="addTrip()">Add Trip</button>
+            </div>
+
+            <!-- Column 2: Trip Map -->
+            <div class="column">
+                <h3>Trip Details</h3>
+                <div id="trip-map" style="height: 400px;"></div>
+                <button onclick="refreshMap()">Refresh</button>
+                <button onclick="updateTrip()">Update</button>
+            </div>
+        </div>
+
+        <!-- Plan Your Trip Section -->
+        <section id="plan-trip">
+            <h2>Plan Your Trip</h2>
+            <form id="trip-form">
+                <label for="trip-name">Trip Name:</label>
+                <input type="text" id="trip-name" name="trip-name"><br><br>
+
+                <label for="trip-date">Trip Date:</label>
+                <input type="date" id="trip-date" name="trip-date"><br><br>
+
+                <label for="trip-duration">Trip Duration:</label>
+                <input type="number" id="trip-duration" name="trip-duration" placeholder="Number of days"><br><br>
+
+                <button type="button" onclick="saveTrip()">Save</button>
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </form>
+        </section>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <p>&copy; 2025 Trip Planner</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
