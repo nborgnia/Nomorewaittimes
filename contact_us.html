@@ -1,32 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Contact Us - No More Wait Times</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumbs {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 6px;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .email {
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 60px;
+    }
+  </style>
 </head>
 <body>
 
-    <section id="contact-us">
-        <h1>Contact Us</h1>
-        <form>
-            <label for="name">Your Name:</label>
-            <input type="text" id="name" name="name"><br><br>
+  <nav class="breadcrumbs">
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/">Home</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips/">My Trips</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a>
+  </nav>
 
-            <label for="email">Your Email:</label>
-            <input type="email" id="email" name="email"><br><br>
+  <div class="container">
+    <h1>Contact Us</h1>
+    <p>
+      If you have any questions, suggestions, or feature requests, feel free to reach out to us. We’re happy to hear from you and always looking to improve the experience for theme park visitors.
+    </p>
+    <p>
+      You can contact us by email at:
+    </p>
+    <p class="email">karnikhil314159@gmail.com</p>
+    <p class="email">nborgnia@gmail.com</p>
+    <p>
+      We’ll get back to you as soon as we can. Thank you for using <strong>NoMoreWaitTimes.com</strong>!
+    </p>
+  </div>
 
-            <label for="message">Your Message:</label>
-            <textarea id="message" name="message"></textarea><br><br>
-
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
-
-    <footer id="footer">
-        <p>&copy; 2025 Trip Planner</p>
-    </footer>
+  <div class="footer">
+    &copy; 2025 No More Wait Times. All rights reserved.
+  </div>
 
 </body>
 </html>
