@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add a Trip - No More Wait Times</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumbs {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 6px;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .back-button:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="breadcrumbs">
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/">Home</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips/">My Trips</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/contact_us">Contact Us</a>
+  </nav>
+
+  <div class="container">
+    <h1>Add a Trip</h1>
+    <form id="trip-form">
+      <div class="form-group">
+        <label for="theme-park">Choose a Theme Park</label>
+        <select id="theme-park" name="theme-park" required>
+          <option value="">Select one</option>
+          <option>Disneyland</option>
+          <option>Disney World</option>
+          <option>Universal Studios Hollywood</option>
+          <option>Universal Orlando</option>
+          <option>Six Flags Magic Mountain</option>
+          <option>Kings Island</option>
+          <option>Cedar Point</option>
+          <option>Busch Gardens Tampa</option>
+          <option>SeaWorld Orlando</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="arrival">Arrival Date & Time</label>
+        <input type="datetime-local" id="arrival" name="arrival" required />
+      </div>
+
+      <div class="form-group">
+        <label for="departure">Departure Time</label>
+        <input type="datetime-local" id="departure" name="departure" required />
+      </div>
+
+      <div class="form-group">
+        <label for="party-size">Party Size</label>
+        <input type="number" id="party-size" name="party-size" min="1" required />
+      </div>
+
+      <div class="form-group">
+        <label for="closed-rides">Closed Rides (if any)</label>
+        <input type="text" id="closed-rides" name="closed-rides" placeholder="e.g., Space Mountain or None" />
+      </div>
+
+      <div class="form-group">
+        <label for="skip-rides">Rides You Don’t Want to Go On (if any)</label>
+        <input type="text" id="skip-rides" name="skip-rides" placeholder="e.g., Tower of Terror or None" />
+      </div>
+
+      <button type="submit">Save Trip</button>
+    </form>
+
+    <a class="back-button" href="../index.html">&larr; Back to My Trips</a>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 No More Wait Times. All rights reserved.
+  </div>
+
+  <script>
+    document.getElementById("trip-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Trip saved! (Functionality coming soon.)");
+      window.location.href = "../index.html";
+    });
+  </script>
+
+</body>
+</html>
