@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add a Trip - No More Wait Times</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .breadcrumbs {
+      max-width: 800px;
+      margin: 20px auto 0;
+      padding: 0 20px;
+      font-size: 14px;
+    }
+
+    .breadcrumbs a {
+      color: #007bff;
+      text-decoration: none;
+      margin-right: 8px;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 20px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumbs">
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/">Home</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips/">My Trips</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a> /
+    <a href="https://nikhilkar199.github.io/Nomorewaittimes/contact_us">Contact Us</a>
+  </div>
+
+  <div class="container">
+    <h1>Add a Trip</h1>
+
+    <form id="add-trip-form">
+      <label for="theme-park">Theme Park</label>
+      <select id="theme-park" name="theme-park" required>
+        <option value="">-- Select a park --</option>
+        <option>Disneyland</option>
+        <option>Disney World</option>
+        <option>Universal Studios Hollywood</option>
+        <option>Universal Orlando</option>
+        <option>Six Flags Magic Mountain</option>
+        <option>Cedar Point</option>
+        <option>Kings Island</option>
+        <option>SeaWorld Orlando</option>
+        <option>Busch Gardens Tampa</option>
+      </select>
+
+      <label for="arrival">Arrival Date & Time</label>
+      <input type="datetime-local" id="arrival" name="arrival" required>
+
+      <label for="departure">Departure Date & Time</label>
+      <input type="datetime-local" id="departure" name="departure" required>
+
+      <label for="party-size">Number of People in Your Party</label>
+      <input type="number" id="party-size" name="party-size" min="1" required>
+
+      <label for="closed-rides">Any Closed Rides (or type "None")</label>
+      <input type="text" id="closed-rides" name="closed-rides" placeholder="e.g., Splash Mountain">
+
+      <label for="skip-rides">Rides You Don't Want to Go On (or type "None")</label>
+      <input type="text" id="skip-rides" name="skip-rides" placeholder="e.g., Tower of Terror">
+
+      <button type="submit">Submit Trip</button>
+    </form>
+
+    <a class="back-link" href="../index.html">&larr; Back to My Trips</a>
+  </div>
+
+  <script>
+    document.getElementById("add-trip-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Trip submitted successfully! (Functionality coming soon.)");
+      window.location.href = "../index.html";
+    });
+  </script>
+
+</body>
+</html>
