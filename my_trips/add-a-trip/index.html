@@ -9,7 +9,6 @@
       background-color: #f2f2f2;
       margin: 0;
     }
-
     .container {
       max-width: 800px;
       margin: 60px auto;
@@ -18,127 +17,130 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     h1 {
       text-align: center;
       margin-bottom: 30px;
     }
-
-    .breadcrumbs {
-      max-width: 800px;
-      margin: 20px auto 0;
-      padding: 0 20px;
-      font-size: 14px;
-    }
-
-    .breadcrumbs a {
-      color: #007bff;
-      text-decoration: none;
-      margin-right: 8px;
-    }
-
-    .breadcrumbs a:hover {
-      text-decoration: underline;
-    }
-
-    label {
+    form label {
       display: block;
-      margin-top: 20px;
+      margin-top: 15px;
       font-weight: bold;
     }
-
-    input, select {
+    form input, form select, form textarea {
       width: 100%;
       padding: 10px;
-      margin-top: 6px;
-      border-radius: 6px;
+      margin-top: 5px;
       border: 1px solid #ccc;
-      font-size: 16px;
+      border-radius: 5px;
     }
-
-    button {
-      margin-top: 30px;
+    form button {
+      margin-top: 20px;
       padding: 12px 20px;
-      background-color: #007bff;
-      border: none;
-      color: white;
       font-size: 16px;
-      border-radius: 6px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
     }
-
-    button:hover {
+    form button:hover {
       background-color: #0056b3;
     }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 20px;
+    .back-button {
+      display: block;
+      text-align: left;
+      margin: 20px auto -40px;
+      width: 800px;
+    }
+    .back-button a {
       text-decoration: none;
-      color: #007bff;
+      color: #007BFF;
       font-weight: bold;
     }
-
-    .back-link:hover {
+    .back-button a:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <div class="breadcrumbs">
-    <a href="https://nikhilkar199.github.io/Nomorewaittimes/">Home</a> /
-    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips/">My Trips</a> /
-    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a> /
-    <a href="https://nikhilkar199.github.io/Nomorewaittimes/contact_us">Contact Us</a>
+  <div class="back-button">
+    <a href="/Nomorewaittimes/my_trips">← Back to My Trips</a>
   </div>
 
   <div class="container">
-    <h1>Add a Trip</h1>
-
-    <form id="add-trip-form">
-      <label for="theme-park">Theme Park</label>
-      <select id="theme-park" name="theme-park" required>
+    <h1>Plan Your Trip</h1>
+    <form>
+      <label for="themePark">Choose a Theme Park:</label>
+      <select id="themePark" name="themePark" required>
         <option value="">-- Select a park --</option>
-        <option>Disneyland</option>
-        <option>Disney World</option>
-        <option>Universal Studios Hollywood</option>
-        <option>Universal Orlando</option>
-        <option>Six Flags Magic Mountain</option>
-        <option>Cedar Point</option>
-        <option>Kings Island</option>
-        <option>SeaWorld Orlando</option>
-        <option>Busch Gardens Tampa</option>
+        <option value="Magic Kingdom">Magic Kingdom</option>
+        <option value="Disneyland">Disneyland</option>
+        <option value="Universal Studios Hollywood">Universal Studios Hollywood</option>
+        <option value="Universal Orlando">Universal Orlando</option>
+        <option value="Epcot">Epcot</option>
+        <option value="Animal Kingdom">Animal Kingdom</option>
+        <option value="Hollywood Studios">Hollywood Studios</option>
+        <!-- Add more US theme parks here -->
       </select>
 
-      <label for="arrival">Arrival Date & Time</label>
-      <input type="datetime-local" id="arrival" name="arrival" required>
+      <label for="arrivalDate">Arrival Date:</label>
+      <input type="date" id="arrivalDate" name="arrivalDate" required>
 
-      <label for="departure">Departure Date & Time</label>
-      <input type="datetime-local" id="departure" name="departure" required>
+      <label for="arrivalTime">Arrival Time:</label>
+      <input type="time" id="arrivalTime" name="arrivalTime" required>
 
-      <label for="party-size">Number of People in Your Party</label>
-      <input type="number" id="party-size" name="party-size" min="1" required>
+      <label for="departureTime">Departure Time:</label>
+      <input type="time" id="departureTime" name="departureTime" required>
 
-      <label for="closed-rides">Any Closed Rides (or type "None")</label>
-      <input type="text" id="closed-rides" name="closed-rides" placeholder="e.g., Splash Mountain">
+      <label for="partySize">Number of People in Your Party:</label>
+      <input type="number" id="partySize" name="partySize" min="1" required>
 
-      <label for="skip-rides">Rides You Don't Want to Go On (or type "None")</label>
-      <input type="text" id="skip-rides" name="skip-rides" placeholder="e.g., Tower of Terror">
+      <label for="closedRides">Closed Rides (if any):</label>
+      <textarea id="closedRides" name="closedRides" placeholder="List any closed rides or write 'None'"></textarea>
+
+      <label for="skipRides">Rides You Don’t Want to Go On:</label>
+      <textarea id="skipRides" name="skipRides" placeholder="List any rides to skip or write 'None'"></textarea>
 
       <button type="submit">Submit Trip</button>
     </form>
-
-    <a class="back-link" href="../index.html">&larr; Back to My Trips</a>
   </div>
 
   <script>
-    document.getElementById("add-trip-form").addEventListener("submit", function(event) {
-      event.preventDefault();
-      alert("Trip submitted successfully! (Functionality coming soon.)");
-      window.location.href = "../index.html";
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("arrivalDate").setAttribute("min", today);
+
+    document.querySelector("form").addEventListener("submit", function(e) {
+      const arrivalDate = document.getElementById("arrivalDate").value;
+      const arrivalTime = document.getElementById("arrivalTime").value;
+      const departureTime = document.getElementById("departureTime").value;
+
+      if (arrivalDate < today) {
+        alert("Arrival date cannot be before today.");
+        e.preventDefault();
+        return;
+      }
+
+      const openTime = "09:00";
+      const closeTime = "22:00";
+
+      if (arrivalTime < openTime || arrivalTime > closeTime) {
+        alert("Arrival time must be between park hours: 9:00 AM and 10:00 PM.");
+        e.preventDefault();
+        return;
+      }
+
+      if (departureTime < openTime || departureTime > closeTime) {
+        alert("Departure time must be between park hours: 9:00 AM and 10:00 PM.");
+        e.preventDefault();
+        return;
+      }
+
+      if (arrivalTime >= departureTime) {
+        alert("Departure time must be after arrival time.");
+        e.preventDefault();
+      }
     });
   </script>
-
 </body>
 </html>
