@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>No More Wait Times - Plan Your Visit</title>
+  <title>No More Wait Times - Home</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,36 +11,23 @@
       background-color: #f9f9f9;
     }
 
-    .breadcrumbs {
-      margin-bottom: 20px;
-      font-size: 16px;
-    }
-
-    .breadcrumbs a {
-      text-decoration: none;
-      color: #007bff;
-      margin-right: 5px;
-    }
-
-    .breadcrumbs a:hover {
-      text-decoration: underline;
-    }
-
     .content {
       background: white;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: auto;
     }
 
     h1 {
       margin-top: 0;
+      text-align: center;
     }
 
     form {
       display: grid;
       gap: 15px;
-      max-width: 700px;
     }
 
     label {
@@ -56,7 +43,7 @@
 
     button {
       padding: 10px 15px;
-      background-color: #28a745;
+      background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
@@ -64,7 +51,7 @@
     }
 
     button:hover {
-      background-color: #218838;
+      background-color: #0056b3;
     }
 
     .error {
@@ -75,15 +62,9 @@
 </head>
 <body>
 
-  <nav class="breadcrumbs">
-    <a href="https://nikhilkar199.github.io/Nomorewaittimes/my_trips">My Trips</a> /
-    <a href="https://nikhilkar199.github.io/Nomorewaittimes/about_us">About Us</a> /
-    <a href="https://nikhilkar199.github.io/Nomorewaittimes/contact_us">Contact Us</a>
-  </nav>
-
   <div class="content">
-    <h1>Plan Your Theme Park Visit</h1>
-    <form id="tripForm" onsubmit="return validateForm()">
+    <h1>Plan Your Theme Park Trip</h1>
+    <form id="tripForm">
       <div>
         <label for="park">Choose Theme Park:</label>
         <select id="park" name="park" required>
@@ -98,7 +79,7 @@
       </div>
 
       <div>
-        <label for="date">Arrival Date:</label>
+        <label for="arrival_date">Arrival Date:</label>
         <input type="date" id="arrival_date" name="arrival_date" required />
       </div>
 
@@ -129,7 +110,7 @@
 
       <div class="error" id="errorMsg"></div>
 
-      <button type="submit">Submit Plan</button>
+      <button type="submit">Submit Trip</button>
     </form>
   </div>
 
@@ -143,48 +124,61 @@
       seaworld: { open: "09:00", close: "21:00" }
     };
 
-    function validateForm() {
-      const errorMsg = document.getElementById('errorMsg');
-      errorMsg.textContent = '';
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("arrival_date").setAttribute("min", today);
 
-      const park = document.getElementById('park').value;
-      const date = new Date(document.getElementById('arrival_date').value);
-      const now = new Date();
-      now.setHours(0, 0, 0, 0); // Only compare date, not time
+    document.getElementById("tripForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-      if (date < now) {
-        errorMsg.textContent = "Arrival date cannot be before today.";
-        return false;
-      }
+      const errorMsg = document.getElementById("errorMsg");
+      errorMsg.textContent = "";
 
-      const arrivalTime = document.getElementById('arrival_time').value;
-      const departureTime = document.getElementById('departure_time').value;
+      const trip = {
+        themePark: document.getElementById("park").value,
+        arrivalDate: document.getElementById("arrival_date").value,
+        arrivalTime: document.getElementById("arrival_time").value,
+        departureTime: document.getElementById("departure_time").value,
+        partySize: document.getElementById("party_size").value,
+        closedRides: document.getElementById("closed_rides").value || "None",
+        skipRides: document.getElementById("avoid_rides").value || "None"
+      };
 
-      if (!parkHours[park]) {
+      if (!trip.themePark || !parkHours[trip.themePark]) {
         errorMsg.textContent = "Please select a valid park.";
-        return false;
+        return;
       }
 
-      const openTime = parkHours[park].open;
-      const closeTime = parkHours[park].close;
+      const openTime = parkHours[trip.themePark].open;
+      const closeTime = parkHours[trip.themePark].close;
 
-      if (arrivalTime < openTime || arrivalTime > closeTime) {
-        errorMsg.textContent = `Arrival time must be between ${openTime} and ${closeTime} for the selected park.`;
-        return false;
+      if (trip.arrivalDate < today) {
+        errorMsg.textContent = "Arrival date cannot be before today.";
+        return;
       }
 
-      if (departureTime < openTime || departureTime > closeTime) {
-        errorMsg.textContent = `Departure time must be between ${openTime} and ${closeTime} for the selected park.`;
-        return false;
+      if (trip.arrivalTime < openTime || trip.arrivalTime > closeTime) {
+        errorMsg.textContent = `Arrival time must be between ${openTime} and ${closeTime}.`;
+        return;
       }
 
-      if (departureTime <= arrivalTime) {
+      if (trip.departureTime < openTime || trip.departureTime > closeTime) {
+        errorMsg.textContent = `Departure time must be between ${openTime} and ${closeTime}.`;
+        return;
+      }
+
+      if (trip.departureTime <= trip.arrivalTime) {
         errorMsg.textContent = "Departure time must be after arrival time.";
-        return false;
+        return;
       }
 
-      return true;
-    }
+      const trips = JSON.parse(localStorage.getItem("trips") || "[]");
+      trips.push(trip);
+      localStorage.setItem("trips", JSON.stringify(trips));
+
+      alert("Trip added!");
+      window.location.href = "/Nomorewaittimes/my_trips/";
+    });
   </script>
+
 </body>
 </html>
