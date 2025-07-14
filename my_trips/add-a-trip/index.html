@@ -106,61 +106,63 @@
   </div>
 
   <script>
-    const today = new Date().toISOString().split("T")[0];
-    document.getElementById("arrivalDate").setAttribute("min", today);
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("arrivalDate").setAttribute("min", today);
 
-    document.getElementById("tripForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+  document.getElementById("tripForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      const themePark = document.getElementById("themePark").value;
-      const arrivalDate = document.getElementById("arrivalDate").value;
-      const arrivalTime = document.getElementById("arrivalTime").value;
-      const departureTime = document.getElementById("departureTime").value;
-      const partySize = document.getElementById("partySize").value;
-      const closedRides = document.getElementById("closedRides").value || "None";
-      const skipRides = document.getElementById("skipRides").value || "None";
+    const themePark = document.getElementById("themePark").value;
+    const arrivalDate = document.getElementById("arrivalDate").value;
+    const arrivalTime = document.getElementById("arrivalTime").value;
+    const departureTime = document.getElementById("departureTime").value;
+    const partySize = document.getElementById("partySize").value;
+    const closedRides = document.getElementById("closedRides").value || "None";
+    const skipRides = document.getElementById("skipRides").value || "None";
 
-      if (arrivalDate < today) {
-        alert("Arrival date cannot be before today.");
-        return;
-      }
+    if (arrivalDate < today) {
+      alert("Arrival date cannot be before today.");
+      return;
+    }
 
-      const openTime = "09:00";
-      const closeTime = "22:00";
+    const openTime = "09:00";
+    const closeTime = "22:00";
 
-      if (arrivalTime < openTime || arrivalTime > closeTime) {
-        alert("Arrival time must be between park hours: 9:00 AM and 10:00 PM.");
-        return;
-      }
+    if (arrivalTime < openTime || arrivalTime > closeTime) {
+      alert("Arrival time must be between park hours: 9:00 AM and 10:00 PM.");
+      return;
+    }
 
-      if (departureTime < openTime || departureTime > closeTime) {
-        alert("Departure time must be between park hours: 9:00 AM and 10:00 PM.");
-        return;
-      }
+    if (departureTime < openTime || departureTime > closeTime) {
+      alert("Departure time must be between park hours: 9:00 AM and 10:00 PM.");
+      return;
+    }
 
-      if (arrivalTime >= departureTime) {
-        alert("Departure time must be after arrival time.");
-        return;
-      }
+    if (arrivalTime >= departureTime) {
+      alert("Departure time must be after arrival time.");
+      return;
+    }
 
-      // ✅ Matching home page format
-      const newTrip = {
-        park: themePark,
-        date: arrivalDate,
-        arrival: arrivalTime,
-        departure: departureTime,
-        party: partySize,
-        closed: closedRides,
-        skip: skipRides
-      };
+    // ✅ Matching Home Page object format
+    const newTrip = {
+      park: themePark,
+      date: arrivalDate,
+      arrival: arrivalTime,
+      departure: departureTime,
+      party: partySize,
+      closed: closedRides,
+      skip: skipRides
+    };
 
-      const trips = JSON.parse(localStorage.getItem("trips") || "[]");
-      trips.push(newTrip);
-      localStorage.setItem("trips", JSON.stringify(trips));
+    const trips = JSON.parse(localStorage.getItem("trips") || "[]");
+    trips.push(newTrip);
+    localStorage.setItem("trips", JSON.stringify(trips));
 
-      // Redirect to My Trips page
-      window.location.href = "/Nomorewaittimes/my_trips";
-    });
-  </script>
+    // ✅ Alert just like the Home Page
+    alert("Trip added!");
+    window.location.href = "/Nomorewaittimes/my_trips";
+  });
+</script>
+
 </body>
 </html>
