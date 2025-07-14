@@ -11,6 +11,21 @@
       background-color: #f9f9f9;
     }
 
+    nav.breadcrumbs {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    nav.breadcrumbs a {
+      color: #007bff;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+
+    nav.breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
     .content {
       background: white;
       padding: 30px;
@@ -18,25 +33,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       max-width: 700px;
       margin: auto;
-    }
-
-    nav.breadcrumbs {
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-
-    nav.breadcrumbs a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    nav.breadcrumbs a:hover {
-      text-decoration: underline;
-    }
-
-    nav.breadcrumbs span {
-      margin: 0 5px;
-      color: #555;
     }
 
     h1 {
@@ -81,13 +77,14 @@
 </head>
 <body>
 
-  <div class="content">
-    <nav class="breadcrumbs">
-      <a href="/Nomorewaittimes/">Home</a>
-      <span>›</span>
-      <span>Plan Trip</span>
-    </nav>
+  <!-- Breadcrumb Navigation -->
+  <nav class="breadcrumbs">
+    <a href="/Nomorewaittimes/my_trips">My Trips</a> /
+    <a href="/Nomorewaittimes/about_us">About Us</a> /
+    <a href="/Nomorewaittimes/contact_us">Contact Us</a>
+  </nav>
 
+  <div class="content">
     <h1>Plan Your Theme Park Trip</h1>
     <form id="tripForm">
       <div>
@@ -207,4 +204,3 @@
 
 </body>
 </html>
-
