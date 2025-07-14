@@ -70,7 +70,7 @@
 
   <div class="container">
     <h1>Plan Your Trip</h1>
-    <form>
+    <form id="tripForm">
       <label for="themePark">Choose a Theme Park:</label>
       <select id="themePark" name="themePark" required>
         <option value="">-- Select a park --</option>
@@ -81,7 +81,6 @@
         <option value="Epcot">Epcot</option>
         <option value="Animal Kingdom">Animal Kingdom</option>
         <option value="Hollywood Studios">Hollywood Studios</option>
-        <!-- Add more US theme parks here -->
       </select>
 
       <label for="arrivalDate">Arrival Date:</label>
@@ -110,14 +109,19 @@
     const today = new Date().toISOString().split("T")[0];
     document.getElementById("arrivalDate").setAttribute("min", today);
 
-    document.querySelector("form").addEventListener("submit", function(e) {
+    document.getElementById("tripForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // prevent default form submission
+
+      const themePark = document.getElementById("themePark").value;
       const arrivalDate = document.getElementById("arrivalDate").value;
       const arrivalTime = document.getElementById("arrivalTime").value;
       const departureTime = document.getElementById("departureTime").value;
+      const partySize = document.getElementById("partySize").value;
+      const closedRides = document.getElementById("closedRides").value || "None";
+      const skipRides = document.getElementById("skipRides").value || "None";
 
       if (arrivalDate < today) {
         alert("Arrival date cannot be before today.");
-        e.preventDefault();
         return;
       }
 
@@ -126,20 +130,35 @@
 
       if (arrivalTime < openTime || arrivalTime > closeTime) {
         alert("Arrival time must be between park hours: 9:00 AM and 10:00 PM.");
-        e.preventDefault();
         return;
       }
 
       if (departureTime < openTime || departureTime > closeTime) {
         alert("Departure time must be between park hours: 9:00 AM and 10:00 PM.");
-        e.preventDefault();
         return;
       }
 
       if (arrivalTime >= departureTime) {
         alert("Departure time must be after arrival time.");
-        e.preventDefault();
+        return;
       }
+
+      const newTrip = {
+        themePark,
+        arrivalDate,
+        arrivalTime,
+        departureTime,
+        partySize,
+        closedRides,
+        skipRides
+      };
+
+      const trips = JSON.parse(localStorage.getItem("trips") || "[]");
+      trips.push(newTrip);
+      localStorage.setItem("trips", JSON.stringify(trips));
+
+      // Redirect to My Trips page
+      window.location.href = "/Nomorewaittimes/my_trips";
     });
   </script>
 </body>
