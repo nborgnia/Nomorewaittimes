@@ -110,7 +110,7 @@
     document.getElementById("arrivalDate").setAttribute("min", today);
 
     document.getElementById("tripForm").addEventListener("submit", function(e) {
-      e.preventDefault(); // prevent default form submission
+      e.preventDefault();
 
       const themePark = document.getElementById("themePark").value;
       const arrivalDate = document.getElementById("arrivalDate").value;
@@ -143,14 +143,15 @@
         return;
       }
 
+      // ✅ Matching home page format
       const newTrip = {
-        themePark,
-        arrivalDate,
-        arrivalTime,
-        departureTime,
-        partySize,
-        closedRides,
-        skipRides
+        park: themePark,
+        date: arrivalDate,
+        arrival: arrivalTime,
+        departure: departureTime,
+        party: partySize,
+        closed: closedRides,
+        skip: skipRides
       };
 
       const trips = JSON.parse(localStorage.getItem("trips") || "[]");
