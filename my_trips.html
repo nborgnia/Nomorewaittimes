@@ -108,7 +108,8 @@
   </div>
 
   <script>
-    const trips = JSON.parse(localStorage.getItem("themeParkTrips") || "[]");
+    // Use the same key as the home page
+    const trips = JSON.parse(localStorage.getItem("trips") || "[]");
 
     const tableBody = document.querySelector("#tripsTable tbody");
 
@@ -117,12 +118,12 @@
       trips.forEach((trip, index) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${trip.park}</td>
+          <td>${trip.themePark}</td>
           <td>${trip.arrivalDate} ${trip.arrivalTime}</td>
-          <td>${trip.departureTime}</td>
+          <td>${trip.arrivalDate} ${trip.departureTime}</td>
           <td>${trip.partySize}</td>
           <td>${trip.closedRides}</td>
-          <td>${trip.avoidRides}</td>
+          <td>${trip.skipRides}</td>
           <td><button class="delete-btn" onclick="deleteTrip(${index})">Delete</button></td>
         `;
         tableBody.appendChild(row);
@@ -131,7 +132,7 @@
 
     function deleteTrip(index) {
       trips.splice(index, 1);
-      localStorage.setItem("themeParkTrips", JSON.stringify(trips));
+      localStorage.setItem("trips", JSON.stringify(trips));
       renderTrips();
     }
 
