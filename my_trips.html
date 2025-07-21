@@ -149,28 +149,20 @@
   <button id="run_btn">Run</button>
   <h3>Result:</h3>
   <div id="output" style="white-space: pre-wrap; font-family: monospace;"></div>
-</section>
-<!-- End Set Ordering App -->
 
-  <!-- load the module -->
-<py-script src="ordering.py"></py-script>
-
-<!-- event binding and UI glue -->
 <py-script>
+def order_set(s: set) -> list:
+    # your algorithm
+    return sorted(s)
+
 from js import document
-
 def on_click(event):
-    raw = document.getElementById('input_set').value
-    items = {elem.strip() for elem in raw.split(',') if elem.strip()}
-    try:
-        ordered = order_set(items)
-        document.getElementById('output').innerText = ', '.join(map(str, ordered))
-    except Exception as e:
-        document.getElementById('output').innerText = f"Error: {e}"
+    items = {e.strip() for e in document.getElementById('input_set').value.split(',') if e.strip()}
+    document.getElementById('output').innerText = ', '.join(order_set(items))
 
-# bind click handler
 document.getElementById('run_btn').addEventListener('click', on_click)
 </py-script>
+</section>
   
 </body>
 </html>
