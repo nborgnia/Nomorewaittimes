@@ -74,6 +74,9 @@
       background-color: #c82333;
     }
   </style>
+<!-- PyScript CSS & JS -->
+<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body>
 
@@ -137,6 +140,16 @@
 
     renderTrips();
   </script>
-
+  
+<!-- Begin Set Ordering App -->
+<section id="ordering-app">
+  <h2>Compute an Ordering</h2>
+  <textarea id="input_set" rows="4" cols="50" placeholder="Enter comma-separated elements"></textarea>
+  <br />
+  <button id="run_btn">Run</button>
+  <h3>Result:</h3>
+  <div id="output" style="white-space: pre-wrap; font-family: monospace;"></div>
+</section>
+<!-- End Set Ordering App -->
 </body>
 </html>
