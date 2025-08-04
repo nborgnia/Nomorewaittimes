@@ -75,12 +75,34 @@
     }
   </style>
   
-<!-- PyScript CSS & JS (pin to a specific version) -->
-  <link rel="stylesheet" href="https://pyscript.net/releases/2025.7.3/core.css" />
-  <script type="module" src="https://pyscript.net/releases/2025.7.3/core.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
   
 </head>
 <body>
+
+      <!-- Ride Sorting Section -->
+    <section id="ride-sorter">
+        <h2>Sort Theme Park Rides</h2>
+        <p>Enter ride names separated by commas and click Sort.</p>
+        <input type="text" id="ride-input" placeholder="e.g., Splash Mountain, Space Mountain">
+        <button type="button" id="sort-rides-btn">Sort</button>
+        <div id="sorted-rides"></div>
+
+        <py-script>
+from js import document
+
+def sort_rides(event=None):
+    rides = document.getElementById("ride-input").value
+    ride_list = [r.strip() for r in rides.split(",") if r.strip()]
+    ride_list.sort()
+    document.getElementById("sorted-rides").innerText = ", ".join(ride_list)
+
+document.getElementById("sort-rides-btn").addEventListener("click", sort_rides)
+        </py-script>
+    </section>
+
 
   <!-- Breadcrumb Navigation -->
   <nav class="breadcrumbs">
